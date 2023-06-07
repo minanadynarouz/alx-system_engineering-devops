@@ -1,2 +1,2 @@
 #!/bin/bash
-ll --sort=version -am; printf '%s\n'
+ll --sort=version -am
