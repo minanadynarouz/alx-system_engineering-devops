@@ -1,8 +1,2 @@
 #!/bin/bash
-for i in $(find . -type f -name "*.html"); do
-    for j in $(find .. -type f -name "*.html"); do
-        if [[ "$i" != "$j" ]]; then
-            cp "$i" ..
-        fi
-    done
-done
+find -maxdepth 1 -name "*.html" -newer ../ -exec cp -n {} ../ \;
