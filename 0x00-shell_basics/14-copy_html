@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -maxdepth 20 -name "*.html" -newer ../ |xargs -I {} cp -n {} ../
+find . -name "*.html" -newer ../ |xargs -I {} cp -n {} ../
