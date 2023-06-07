@@ -6,16 +6,10 @@ IFS= read -r commitVar
 
 git commit -m "$commitVar"
 
-echo "Insert Git Username:"
-IFS= read -r username
-
-echo "Insert Git Password:"
-IFS= read -r -s password
-
 # Set the credentials globally
 git config --global credential.helper store
-git config --global user.name "$username"
-git config --global user.password "$password"
+git config --global user.name minanadynarouz
+git config --global user.token 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
 
 # Push the changes
 git push
