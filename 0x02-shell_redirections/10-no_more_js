@@ -1,2 +1,2 @@
 #!/bin/bash
-find -mindepth -type f -name "*.js" | xargs rm
+find -mindepth -name "*.js" -type f | xargs rm
