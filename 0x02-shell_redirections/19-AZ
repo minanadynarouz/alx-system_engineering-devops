@@ -1,0 +1,2 @@
+#!/bin/bash
+tr 'A' 'Z' < test19 | tr 'c' 'e'
