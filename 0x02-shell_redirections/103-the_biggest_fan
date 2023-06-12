@@ -1,0 +1,2 @@
+#!/bin/bash
+tail -n +2 nasa.tsv | sort | cut -d' ' -f 1 | head -n 11
