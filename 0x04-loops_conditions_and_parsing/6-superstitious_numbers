@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# script that displays numbers from 1 to 20
+
+i=1
+four="bad luck from China"
+nine="bad luck from Japan"
+seventeen="bad luck from Italy"
+
+while [ "$i" -le 20 ]; do
+	case "$i" in
+		4)
+			echo "$i"
+			echo "$four"
+			;;
+		9)
+			echo "$i"
+			echo "$nine"
+			;;
+		17)
+			echo "$i"
+			echo "$seventeen"
+			;;
+		*)
+			echo "$i"
+			;;
+	esac
+	((i++))	
+done
