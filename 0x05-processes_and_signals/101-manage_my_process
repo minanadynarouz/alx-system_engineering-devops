@@ -17,13 +17,13 @@ elif [ "$arg" == "start" ]; then
 	echo "manage_my_process started"
 elif [ "$arg" == "stop" ]; then
     	pid=$(cat "$pid_file")
-	kill -9 $pid
+	kill -9 "$pid"
 	rm -f "$pid_file"
 	echo "manage_my_process stopped"
 elif [ "$arg" == "restart" ]; then
 	if [ -e $pid_file ]; then
 		pid=$(cat "$pid_file")
-        	kill -9 $pid
+        	kill -9 "$pid"
         	rm -f "$pid_file"
 	fi
 	./manage_my_process &
