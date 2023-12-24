@@ -5,10 +5,10 @@
 #include <unistd.h>
 
 /**
- * infinite_while - loop runs infinitly
- * Return: zero if broken
+ * infinite_while - Run an infinite while loop.
+ *
+ * Return: Always 0.
  */
-
 int infinite_while(void)
 {
 	while (1)
@@ -19,29 +19,29 @@ int infinite_while(void)
 }
 
 /**
- * main - program that creates 5 zombies processes
- * Return: 0 if success, 1 otherwise
+ * main - Creates five zombie processes.
+ *
+ * Return: Always 0.
  */
-
 int main(void)
 {
-	pid_t childs_pid;
-	int counter = 0;
+	pid_t pid;
+	char count = 0;
 
-	while (counter < 5)
+	while (count < 5)
 	{
-		if (childs_pid > 0)
+		pid = fork();
+		if (pid > 0)
 		{
-			childs_pid = fork();
-			printf("Zombie process created, PID: %d\n", childs_pid);
+			printf("Zombie process created, PID: %d\n", pid);
 			sleep(1);
-			counter++;
+			count++;
 		}
 		else
-		{
 			exit(0);
-		}
 	}
+
 	infinite_while();
-	return (0);
+
+	return (EXIT_SUCCESS);
 }
