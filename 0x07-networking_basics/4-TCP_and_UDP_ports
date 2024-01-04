@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# showing all listining sockets that shows PIDs and names.
+
+sudo netstat -lp
