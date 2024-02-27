@@ -2,6 +2,6 @@
 # install nginx on ubuntu machine
 
 apt-get update
-apt-get -y install nginx
+apt-get install -y nginx
 echo "Hello World!" > /var/www/html/index.html
 service nginx start
