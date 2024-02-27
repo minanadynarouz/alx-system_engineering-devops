@@ -4,7 +4,7 @@
 function install_and_add(){
 	sudo apt-get 
 	sudo apt-get install -y 
-	echo 'Hello World!' > /var/www/html/index.
+	echo 'Hello World!' > /var/www/html/index.html
 	service nginx start
 }
 
