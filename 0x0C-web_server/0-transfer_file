@@ -8,6 +8,6 @@ private_key=$4
 
 if [[ -z "$private_key" ]]; then
 	echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
-else;
-	scp "$file_to_transfer" "$to_ip" "$username" "$private_key"
+else
+	scp -i "$private_key" "$file_to_transfer" "$username@$to_ip:"
 fi
