@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # install nginx on ubuntu machine
 
-function install_and_add(){
-	sudo apt-get 
-	sudo apt-get install -y 
-	echo 'Hello World!' > /var/www/html/index.
-	service nginx start
-}
+#!/bin/bash
 
-install_and_add();
+# Install nginx with the -y option
+apt-get update
+apt-get install -y nginx
+
+echo "Hello World!" > /usr/share/nginx/html/index.html
+
+service nginx restart > /dev/null 2>&1
