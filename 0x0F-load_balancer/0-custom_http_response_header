@@ -2,38 +2,13 @@
 # configure nginx with custom headers
 # shellcheck disable=SC2059
 
-function install_and_configure_nginx(){
-	sudo apt-get update
-    	sudo apt-get -y install nginx
-    	sudo chown -R "$USER":"$USER" /var/www/html/
-    	echo 'Hello World!' > /var/www/html/index.html
-    	sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/
-	
-	server_config="server {
-                listen 80 default_server;
-                listen [::]:80 default_server;
-                root /var/www/html;
-                index index.html index.htm index.nginx-debian.html;
-                server_name _;
-                add_header X-Served-By \$hostname;
-                location / {
-                    try_files \$uri \$uri/ =404;
-                }
-                location /redirect_me {
-                    rewrite ^ https://youtube.com/watch?v=QH2-TGUlwu4 permanent;
-                }
-                error_page 404 /404.html;
-                location = /404.html {
-                    internal;
-                }
-            }"
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo chown -R "$USER":"$USER" /var/www/html/
+echo 'Hello World!' > /var/www/html/index.html
+sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/
 
-	echo -e "$server_config" >> /etc/nginx/sites-available/default
-
-    	if [[ $(pgrep nginx) ]]; then
-        	sudo nginx -s reload
-    	else
-        	sudo service nginx start
-    	fi
-}
-install_and_configure_nginx;
+hostname=$(hostname)
+custom_header="add_header X-Served-By $hostname;"
+sudo sed -i "/server_name _;/a \\\t$custom_header" /etc/nginx/sites-available/default
+sudo systemctl reload nginx
