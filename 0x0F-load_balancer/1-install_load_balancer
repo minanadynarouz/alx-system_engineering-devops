@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Script to install and configure HAproxy loadbalancer on the server(lb-01)
+# shellcheck disable=SC2059
 
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends software-properties-common
@@ -9,13 +10,13 @@ sudo apt-get -y install haproxy=2.0.\*
 lb_config=\
 "defaults
     mode http
-    balance roundrobin
 
 frontend web-frontend
     bind *:80
     default_backend web-backend
 
 backend web-backend
+    balance roundrobin
     server STUDENT_ID-web-01 54.237.83.201:80 check
     server STUDENT_ID-web-02 54.236.54.165:80 check
 "
