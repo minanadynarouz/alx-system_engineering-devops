@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Configuring subdomain zones
 # shellcheck disable=SC2086
 
