@@ -1,0 +1,34 @@
+#!/bin/bash
+# Configuring subdomain zones
+# shellcheck disable=SC2086
+
+print_info() {
+	local domain="$1"
+	local subdomain="$2"
+	local record_type="$3"
+	local destination="$4"
+	echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+dig_dns() {
+	local domain="$1"
+	local subdomain="$2"
+	dig_output=(dig "$subdomain.$domain" | awk '/ANSWER SECTION/ {getline; print}')
+	if [[ -n "$dig_output"]]; then
+		record_type=$(echo "$dig_output" | awk '{print $4}')
+		destination=$(echo "$dig_output" | awk '{print $5}')
+		print_info "$domain" "$subdomain" "$record_type" "$destination"
+	fi
+}
+
+domain=$1
+subdomain=$2
+
+if [[ -z subdomain ]]; then
+	dig_dns "$domain" "www"
+	dig_dns "$domain" "lb-01"
+	dig_dns "$domain" "web-01"
+	dig_dns "$domain" "web-02"
+else
+	dig_dns "domain" "$subdomain"
+fi
