@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Configuring subdomain zones
+# shellcheck disable=SC2027
 # shellcheck disable=SC2086
 
 print_info() {
