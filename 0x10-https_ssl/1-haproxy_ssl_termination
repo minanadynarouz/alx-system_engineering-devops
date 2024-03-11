@@ -1,17 +1,18 @@
 defaults
-    mode http
-    timeout client 15s
-    timeout connect 10s
-    timeout server 15s
-    timeout http-request 10s
+    	mode http 
+	timeout client 15s
+	timeout client 15s
+    	timeout connect 10s
+    	timeout server 15s
+    	timeout http-request 10s
 
 frontend g6pd-frontend
-    bind *:80
-    bind *:443 ssl crt /etc/letsencrypt/live/www.g6pdtracker.tech/fullchain.pem
-    default_backend g6pd-backend
+    	bind *:80
+    	bind *:443 ssl crt /etc/letsencrypt/live/www.g6pdtracker.tech/fullchain.pem
+    	default_backend g6pd-backend
 
 backend g6pd-backend
-    http-request redirect scheme https if  !{ ssl_fc }
-    balance roundrobin
-    server 198250-web-01 34.207.190.209:80 check
-    server 198250-web-02 54.160.98.1:80 check
+    	http-request redirect scheme https if  !{ ssl_fc }
+    	balance roundrobin
+    	server 198250-web-01 34.207.190.209:80 check
+    	server 198250-web-02 54.160.98.1:80 check
