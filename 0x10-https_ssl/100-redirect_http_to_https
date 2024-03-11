@@ -1,18 +1,19 @@
 defaults
-    mode http
-    timeout client 15s
-    timeout connect 10s
-    timeout server 15s
-    timeout http-request 10s
+    	mode http 
+	timeout client 15s
+	timeout client 15s
+    	timeout connect 10s
+    	timeout server 15s
+    	timeout http-request 10s
 
-frontend server-frontend
-    bind *:80
-    bind *:443 ssl crt /etc/haproxy/certs/g6pdtracker.tech.pem
-    http-request redirect scheme https  if !{ ssl_fc }
-    default_backend server-backend
+frontend g6pd-frontend
+    	bind *:80
+    	bind *:443 ssl crt /etc/letsencrypt/live/www.g6pdtracker.tech/fullchain.pem
+	http-request redirect scheme https  if !{ ssl_fc }
+    	default_backend g6pd-backend
 
-backend server-backend
-    http-request redirect scheme https if  !{ ssl_fc }
-    balance roundrobin
-    server 198250-web-01 34.224.95.253:80 check
-    server 198250-web-02 52.91.153.147:80 check
+backend g6pd-backend
+    	http-request redirect scheme https if  !{ ssl_fc }
+    	balance roundrobin
+    	server 198250-web-01 34.207.190.209:80 check
+    	server 198250-web-02 54.160.98.1:80 check
