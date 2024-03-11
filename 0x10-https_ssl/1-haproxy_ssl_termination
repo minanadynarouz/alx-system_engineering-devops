@@ -7,11 +7,11 @@ defaults
 
 frontend g6pd-frontend
     bind *:80
-    bind *:443 ssl crt /etc/haproxy/certs/g6pdtracker.tech.pem
+    bind *:443 ssl crt /etc/letsencrypt/live/www.g6pdtracker.tech/fullchain.pem
     default_backend g6pd-backend
 
 backend g6pd-backend
     http-request redirect scheme https if  !{ ssl_fc }
     balance roundrobin
-    server 198250-web-01 54.237.83.201:80 check
-    server 198250-web-02 54.236.54.165:80 check
+    server 198250-web-01 34.207.190.209:80 check
+    server 198250-web-02 54.160.98.1:80 check
