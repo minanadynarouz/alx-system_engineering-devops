@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Function to configure nginx settings
+
+configure_nginx() {
+    chmod 644 /etc/nginx/nginx.conf
+    sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
+    sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+}
+restart_nginx() {
+    service nginx restart
+}
+
+configure_nginx
+pkill apache2
+restart_nginx
