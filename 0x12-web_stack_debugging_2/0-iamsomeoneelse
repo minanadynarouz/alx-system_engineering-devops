@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# script should run the whoami command under the user passed as an argument
+
+function who_am_i(){
+	if [[ -z "$1" ]]; then
+		/bin/bash -c whoami
+	else
+		sudo su "$1" -s /bin/bash -c whoami
+	fi
+}
+
+who_am_i "$1"
