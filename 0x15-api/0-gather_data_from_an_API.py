@@ -1,39 +1,29 @@
 #!/usr/bin/python3
-"""Get employee details from REST API"""
-
+""" 0-gather_data_from_an_API
+    Gets user todo list progress.
+"""
 import requests
-from sys import argv
+import sys
 
 
-def fetch_emp(id):
-    """Function to fetch the id from users table and from tasks table"""
-    data = ""
-    completed = 0
-    total_tasks = 0
-    tasks_list = []
+def main():
+    """According to user_id, show information
+    """
+    user_id = sys.argv[1]
+    user = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
+    todos = 'https://jsonplaceholder.typicode.com/todos/?userId={}'.format(
+        user_id)
+    name = requests.get(user).json().get('name')
+    request_todo = requests.get(todos).json()
+    tasks = [task.get('title')
+             for task in request_todo if task.get('completed') is True]
 
-    if id:
-        req_todo = requests.get('https://jsonplaceholder.typicode.com/todos?
-				userId={}'.format(id))
-        req_user = requests.get('https://jsonplaceholder.typicode.com/users?
-				id={}'.format(id))
-        if req_todo.status_code == 200:
-            todos = req_todo.json()
-
-    for todo in todos:
-        total_tasks += 1
-        if todo["completed"]:
-            completed += 1
-            tasks_list.append(todo["title"])
-
-    user = req_user.json()[0]["name"]
-
-    print("Employee {} is done with tasks({}/{}):".
-	format(user, completed, total_tasks))
-
-    for task in tasks_list:
-        print("\t {}".format(task))
+    print('Employee {} is done with tasks({}/{}):'.format(name,
+                                                          len(tasks),
+                                                          len(request_todo)))
+    print('\n'.join('\t {}'.format(task) for task in tasks))
 
 
-if __name__ == '__main__':
-        fetch_emp(argv[1])
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        main()
