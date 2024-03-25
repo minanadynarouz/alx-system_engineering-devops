@@ -1,36 +1,40 @@
 #!/usr/bin/python3
-"""Get employee details from REST API"""
+"""A simple module to make API Calls
+To a mockup API server and return the
+The tasks"""
 
+from requests import get
 from sys import argv
-import requests
+
+headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "User-Agent": "Thing Gecko/20100101 Firefox/102.0"
+}
+base_url = "https://jsonplaceholder.typicode.com/users/"
 
 
-def fetch_emp(id):
-    """Function to fetch the id from users table and from tasks table"""
-    data = ""
-    completed = 0
-    total_tasks = 0
-    tasks_list = []
+def get_task_status(user_id: str) -> None:
+    """
+    Get the task status for a certain user
+    Args:
+        user_id (str): The user id of the user
+    """
+    # lets first get the name of Employee
+    emp_name = get("{}{}".format(base_url, user_id)).json().get("name")
+    full_url = "{}{}/todos/".format(base_url, user_id)
+    response = get(full_url, headers=headers).json()
+    # lets get the total number of tasks shall we?
+    total_tasks = len(response)
 
-    if id:
-        req_todo = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'.format(id))
-        req_user = requests.get('https://jsonplaceholder.typicode.com/users?id={}'.format(id))
-        if req_todo.status_code == 200:
-            todos = req_todo.json()
-
-    for todo in todos:
-        total_tasks += 1
-        if todo["completed"]:
-            completed += 1
-            tasks_list.append(todo["title"])
-
-    user = req_user.json()[0]["name"]
-
-    print("Employee {} is done with tasks({}/{}):".format(user, completed, total_tasks))
-
-    for task in tasks_list:
-        print("\t {}".format(task))
+    # How about done tasks
+    done_tasks = [task['title'] for task in response
+                  if task['completed']]
+    done_tasks_count = len(done_tasks)
+    print("Employee {} is done with tasks({}/{}):".format(
+        emp_name, done_tasks_count, total_tasks))
+    [print("\t {}".format(task)) for task in done_tasks]
 
 
-if __name__ == '__main__':
-        fetch_emp(argv[1])
+if __name__ == "__main__":
+    get_task_status(argv[1])
