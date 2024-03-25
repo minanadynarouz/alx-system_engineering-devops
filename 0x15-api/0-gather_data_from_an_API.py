@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Get employee details from REST API"""
 
-from sys import argv
 import requests
+from sys import argv
 
 
 def fetch_emp(id):
