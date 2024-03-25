@@ -13,8 +13,10 @@ def fetch_emp(id):
     tasks_list = []
 
     if id:
-        req_todo = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'.format(id))
-        req_user = requests.get('https://jsonplaceholder.typicode.com/users?id={}'.format(id))
+        req_todo = requests.get('https://jsonplaceholder.typicode.com/todos
+				?userId={}'.format(id))
+        req_user = requests.get('https://jsonplaceholder.typicode.com/users
+				?id={}'.format(id))
         if req_todo.status_code == 200:
             todos = req_todo.json()
 
@@ -26,7 +28,8 @@ def fetch_emp(id):
 
     user = req_user.json()[0]["name"]
 
-    print("Employee {} is done with tasks({}/{}):".format(user, completed, total_tasks))
+    print("Employee {} is done with tasks({}/{}):".
+				format(user, completed, total_tasks))
 
     for task in tasks_list:
         print("\t {}".format(task))
