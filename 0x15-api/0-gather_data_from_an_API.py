@@ -17,25 +17,27 @@ headers = {
 base_url = "https://jsonplaceholder.typicode.com/users/"
 
 
-def save_task_status_to_csv(user_id: str) -> None:
+def get_task_status(user_id: str) -> None:
     """
-    Get the task status for a certain user and save 'em
+    Get the task status for a certain user
     Args:
         user_id (str): The user id of the user
     """
     # lets first get the name of Employee
-    emp_name = get("{}{}".format(base_url, user_id)).json().get("username")
+    emp_name = get("{}{}".format(base_url, user_id)).json().get("name")
     full_url = "{}{}/todos/".format(base_url, user_id)
     response = get(full_url, headers=headers).json()
-    # save the tasks that belong to this user to a csv file
-    file_name = "{}.csv".format(user_id)
-    with open(file_name, "w", encoding="utf-8") as csv_file:
-        for resp in response:
-            csv_file.write('"{}","{}","{}","{}"\n'
-                           .format(resp.get("userId"),
-                                   emp_name, resp.get("completed"),
-                                   resp.get("title")))
+    # lets get the total number of tasks shall we?
+    total_tasks = len(response)
+
+    # How about done tasks
+    done_tasks = [task['title'] for task in response
+                  if task['completed']]
+    done_tasks_count = len(done_tasks)
+    print("Employee {} is done with tasks({}/{}):".format(
+        emp_name, done_tasks_count, total_tasks))
+    [print("\t {}".format(task)) for task in done_tasks]
 
 
 if __name__ == "__main__":
-    save_task_status_to_csv(argv[1])
+    get_task_status(argv[1])
