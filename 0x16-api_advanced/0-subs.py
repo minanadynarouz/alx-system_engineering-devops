@@ -10,12 +10,12 @@ from sys import argv
 
 
 headers = {
-    "User-Agent": "mozzila 5.0",
-    "X-Forwared-For": "mina"
+    "User-Agent": "Of course I had to use a custom User-Agent",
+    "X-Forwared-For": "iamthecavalry"
 }
 
 
-def number_of_subscribers(subreddit: str) -> int:
+def number_of_subscribers(subreddit):
     """
     Query the subreddit and return the number of
     Active subs. If its an invalid subredit, return 0
